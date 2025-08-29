@@ -16,11 +16,11 @@ const ld EPS=1e-9;
 
 using namespace std;
 
-void sol(){
+void sol() {
     
 }
 
-int main(){
+int main() {
     IOS;
     int t;cin>>t;while(t--) sol();
     return 0;

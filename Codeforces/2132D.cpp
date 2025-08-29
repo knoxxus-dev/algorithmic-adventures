@@ -1,7 +1,5 @@
 #include <bits/stdc++.h>
-#define IOS                       \
-    ios_base::sync_with_stdio(0); \
-    cin.tie(0);
+#define IOS ios_base::sync_with_stdio(0);cin.tie(0);
 #define endl '\n'
 #define ld long double
 #define ll long long
@@ -20,12 +18,10 @@ using namespace std;
 
 ll dp[16][2];
 
-long long binexp(long long base, long long exp, long long mod = LLONG_MAX)
-{
+long long binexp(long long base, long long exp, long long mod = LLONG_MAX) {
     base %= mod;
     long long res = 1;
-    while (exp > 0)
-    {
+    while (exp > 0) {
         if (exp & 1)
         {
             res = res * base % mod;
@@ -36,54 +32,44 @@ long long binexp(long long base, long long exp, long long mod = LLONG_MAX)
     return res;
 }
 
-ll count(string x, ll n, ll limit)
-{
-    if (limit == 0)
-    {
+ll count(string x, ll n, ll limit) {
+    if (limit == 0) {
         return binexp(10, n);
     }
-    if (n == 0)
-    {
+    if (n == 0) {
         return 1;
     }
     ll numbers = 0;
     ll ub = x[x.size() - n] - '0';
-    for (ll i = 0; i <= ub; i++)
-    {
-        numbers += count(x, n - 1, limit & (i == ub));
+    for (ll i = 0; i <= ub; i++) {
+        numbers += count(x, n - 1, limit && (i == ub));
     }
     return numbers;
 }
 
-ll sum_of_sum_of_digits(string x, ll n, ll limit)
-{
-    if (n == 0)
-    {
+ll sum_of_sum_of_digits(string x, ll n, ll limit) {
+    if (n == 0) {
         return 0;
     }
-    if (dp[n][limit] != -1)
-    {
+    if (dp[n][limit] != -1) {
         return dp[n][limit];
     }
     ll final_sum = 0;
     ll ub = limit ? x[x.size() - n] - '0' : 9;
-    for (ll i = 0; i <= ub; i++)
-    {
-        final_sum += i * count(x, n - 1, limit * (i == ub)) + sum_of_sum_of_digits(x, n - 1, limit && (i == ub));
+    for (ll i = 0; i <= ub; i++) {
+        final_sum += i * count(x, n - 1, limit && (i == ub)) + sum_of_sum_of_digits(x, n - 1, limit && (i == ub));
     }
     return dp[n][limit] = final_sum;
 }
 
-void sol()
-{
+void sol() {
     memset(dp, -1, sizeof(dp));
     ll k;
     cin >> k;
     ll len = 1;
     ll x = k;
     ll current = 9;
-    while (x > 0)
-    {
+    while (x > 0) {
         x -= len * current;
         len++;
         current *= 10;
@@ -91,8 +77,7 @@ void sol()
     len--;
     current = 9;
     ll total = 0;
-    for (ll i = 1; i < len; i++)
-    {
+    for (ll i = 1; i < len; i++) {
         total += i * current;
         current *= 10;
     }
@@ -100,17 +85,13 @@ void sol()
     ll jump = k / len;
     ll shift = k % len;
     ll start = 1;
-    for (ll i = 0; i < len - 1; i++)
-    {
+    for (ll i = 0; i < len - 1; i++) {
         start *= 10;
     }
     ll final_number;
-    if (start != 1)
-    {
+    if (start != 1) {
         final_number = start + jump;
-    }
-    else
-    {
+    } else {
         final_number = jump + 1;
     }
     string final_number_string = to_string(final_number - 1);
@@ -122,12 +103,10 @@ void sol()
     cout << ans << endl;
 }
 
-int main()
-{
+int main() {
     IOS;
     int t;
     cin >> t;
-    while (t--)
-        sol();
+    while (t--) sol();
     return 0;
 }
