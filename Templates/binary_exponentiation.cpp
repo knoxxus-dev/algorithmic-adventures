@@ -1,4 +1,6 @@
-long long binexp(long long base, long long exp, long long mod)
+#include <bits/stdc++.h>
+
+long long binexp(long long base, long long exp, long long mod = LLONG_MAX)
 {
     base %= mod;
     long long res = 1;
